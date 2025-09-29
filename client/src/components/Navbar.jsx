@@ -49,16 +49,16 @@ const Navbar = () => {
               <li key={item.name}>
                 <a href={item.url}>{item.name}</a>
               </li>
-            ))}
+            ))}eee
           </ul>
         </div>
-{/* <a href="/" className="flex items-center space-x-2">
+<a href="/" className="flex items-center space-x-2">
   <img
-    src="/images/Grab_Logo.png" // เปลี่ยนเป็น path ของโลโก้รูปที่เราจะใช้
+    src="/images/book.jpg" // เปลี่ยนเป็น path ของโลโก้รูปที่เราจะใช้
     alt="Logo"
     className="h-8 w-auto" // ปรับขนาดโลโก้
   />
-</a> */}
+</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

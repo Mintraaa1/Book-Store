@@ -67,7 +67,7 @@ const Register = () => {
         {/* รูปหน้า form register */}
         <div className="w-3/5">
           <img
-            src="/images/Grab_register.jpg"
+            src="/images/1.png"
             alt="Register Illustration"
             className="object-cover w-full h-full"
           />
