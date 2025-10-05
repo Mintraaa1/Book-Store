@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import BookService from "../services/book.service";
 import Swal from "sweetalert2";
-import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateBook = () => {
   const { id } = useParams();
-  const [book, setBook] = useState(null);
   const navigate = useNavigate();
+  const [book, setBook] = useState({
+    title: "",
+    author: "",
+    category: "",
+    publishYear: "",
+    coverImage: "",
+  });
 
+  // โหลดข้อมูลหนังสือจาก id
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -23,34 +30,81 @@ const UpdateBook = () => {
   }, [id]);
 
   const handleChange = (e) => {
-    setBook({ ...book, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setBook((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      const response = await BookService.updateBook(id, book);
+      const response = await BookService.updateBookById(id, book);
       if (response.status === 200) {
-        Swal.fire("Success", "Book updated successfully!", "success");
-        navigate("/");
+        Swal.fire("Success", "Book updated successfully!", "success").then(() => {
+          navigate("/");
+        });
       }
     } catch (error) {
       Swal.fire("Error", error?.response?.data?.message || error.message, "error");
     }
   };
 
-  if (!book) return <p>Loading...</p>;
-
   return (
-    <div className="max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Update Book</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" name="title" value={book.title || ""} placeholder="Title" className="input input-bordered w-full" onChange={handleChange} required />
-        <input type="text" name="author" value={book.author || ""} placeholder="Author" className="input input-bordered w-full" onChange={handleChange} required />
-        <input type="text" name="category" value={book.category || ""} placeholder="Category" className="input input-bordered w-full" onChange={handleChange} />
-        <input type="number" name="publishYear" value={book.publishYear || ""} placeholder="Publish Year" className="input input-bordered w-full" onChange={handleChange} />
-        <button type="submit" className="btn btn-primary w-full">Update</button>
-      </form>
+    <div className="container mx-auto">
+      <h1 className="text-2xl text-center mt-5 mb-4">✏️ Update Book</h1>
+      <div className="flex flex-col items-center space-y-4">
+        <input
+          type="text"
+          name="title"
+          placeholder="Book Title"
+          className="input input-bordered w-full max-w-md"
+          value={book.title}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="author"
+          placeholder="Author"
+          className="input input-bordered w-full max-w-md"
+          value={book.author}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="category"
+          placeholder="Category"
+          className="input input-bordered w-full max-w-md"
+          value={book.category}
+          onChange={handleChange}
+        />
+        <input
+          type="number"
+          name="publishYear"
+          placeholder="Publish Year"
+          className="input input-bordered w-full max-w-md"
+          value={book.publishYear}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="coverImage"
+          placeholder="Cover Image URL"
+          className="input input-bordered w-full max-w-md"
+          value={book.coverImage}
+          onChange={handleChange}
+        />
+
+        {book.coverImage && (
+          <img src={book.coverImage} alt="Preview" className="h-32 mt-2" />
+        )}
+
+        <div className="space-x-2 mt-4">
+          <button onClick={handleSubmit} className="btn btn-primary">
+            Update
+          </button>
+          <button onClick={() => navigate("/")} className="btn btn-error">
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
