@@ -1,76 +1,45 @@
-import React from "react";
-import { useAuthContext } from "../context/AuthContext";
-import UserProfile from "./UserProfile";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { user } = useAuthContext();
+  const [theme, setTheme] = useState("light");
 
-  const menuItems = [
-    { name: "Search", url: "/" },
-    { name: "Add Item", url: "/items/add" },
-    { name: "About Us", url: "/about" },
-  ];
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") || "light";
+    setTheme(saved);
+    document.documentElement.classList.add(saved);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(newTheme);
+  };
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-          >
-            {menuItems.map((item) => (
-              <li key={item.name}>
-                <Link to={item.url}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <Link to="/" className="flex items-center space-x-2">
-          <img
-            src="/images/book.jpg"
-            alt="Logo"
-            className="h-8 w-auto"
-          />
+    <nav className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 shadow-lg sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center px-6 py-4">
+        <Link to="/" className="text-2xl font-extrabold text-white">
+          📚 Book Store
         </Link>
+
+        <div className="flex items-center gap-6">
+          <Link to="/" className="text-white hover:underline">Home</Link>
+          <Link to="/add" className="text-white hover:underline">Add Book</Link>
+          <Link to="/profile" className="text-white hover:underline">Profile</Link>
+
+          <button
+            onClick={toggleTheme}
+            className="px-3 py-1 rounded-lg border text-sm bg-white/20 text-white hover:bg-white/30"
+          >
+            {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+          </button>
+        </div>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              <Link to={item.url}>{item.name}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="navbar-end space-x-2">
-        {user ? (
-          <UserProfile />
-        ) : (
-          <div className="space-x-2">
-            <Link to="/register" className="btn btn-soft">Register</Link>
-            <Link to="/login" className="btn btn-soft">Login</Link>
-          </div>
-        )}
-      </div>
-    </div>
+    </nav>
   );
 };
 

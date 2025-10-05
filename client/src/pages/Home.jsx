@@ -15,7 +15,7 @@ const Home = () => {
       try {
         const response = await BookService.getAllBooks();
         if (response.status === 200) {
-          const apiData = response.data?.data || []; // ✅ ใช้ response.data.data
+          const apiData = response.data?.data || []; // ✅ API ของอาจารย์ใช้ data.data
           setBooks(apiData);
           setFilteredBooks(apiData);
         }
@@ -72,15 +72,19 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center my-6">📚 Book Store</h1>
+    <div className="container mx-auto px-4">
+      <h1 className="text-4xl font-extrabold text-center my-8 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-600 bg-clip-text text-transparent">
+  📚 Book Store
+</h1>
+
+
 
       {/* Search box */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-8">
         <input
           type="search"
-          placeholder="Search by title or author..."
-          className="input input-bordered w-full max-w-md"
+          placeholder="🔍 Search by title or author..."
+          className="w-full max-w-md px-4 py-2 rounded-full border border-gray-300 shadow focus:ring focus:ring-purple-300 focus:outline-none"
           onChange={(e) => handleSearch(e.target.value)}
         />
       </div>

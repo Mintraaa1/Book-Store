@@ -2,29 +2,28 @@ import React from "react";
 
 const BookCard = ({ book, onEdit, onDelete }) => {
   return (
-    <div className="card w-72 bg-base-100 shadow-xl">
+    <div className="card bg-white shadow-xl rounded-lg hover:scale-105 transition-transform">
       <figure>
         <img
-          src={book.imageUrl || "https://placehold.co/200x300?text=No+Image"}
+          src={book.coverImage || "https://source.unsplash.com/400x600/?book"}
           alt={book.title}
-          className="h-48 object-cover w-full"
+          className="h-60 w-full object-cover rounded-t-lg"
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{book.title}</h2>
-        <p className="text-sm text-gray-600">✍️ {book.author}</p>
-        <p className="text-sm">📚 {book.category}</p>
-        <p className="text-lg font-bold text-green-600">฿{book.price}</p>
-        <div className="card-actions justify-end">
+        <h2 className="card-title text-lg font-bold">{book.title}</h2>
+        <p className="text-gray-600">{book.author}</p>
+        <p className="text-sm text-gray-400">{book.category}</p>
+        <div className="flex gap-2 mt-3">
           <button
-            className="btn btn-sm btn-outline btn-primary"
-            onClick={() => onEdit(book.id)}
+            className="btn btn-primary btn-sm"
+            onClick={() => onEdit(book.itemId)}
           >
             Edit
           </button>
           <button
-            className="btn btn-sm btn-outline btn-error"
-            onClick={() => onDelete(book.id)}
+            className="btn btn-error btn-sm"
+            onClick={() => onDelete(book.itemId)}
           >
             Delete
           </button>
