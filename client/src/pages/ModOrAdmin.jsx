@@ -7,11 +7,12 @@ const ModOrAdmin = ({ children }) => {
     return <Navigate to="/login" />;
   }
   if (
-    user?.authorities.includes("ROLES_ADMIN") ||
-    user?.authorities.includes("ROLES_MODERATOR")
-  ) {
-    return children;
-  }
+  user?.authorities?.includes("ROLE_ADMIN") ||
+  user?.authorities?.includes("ROLE_MODERATOR")
+) {
+  return children;
+}
+
   return <Navigate to="/notallowed" />;
 };
 

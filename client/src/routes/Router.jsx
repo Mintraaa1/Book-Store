@@ -1,8 +1,10 @@
 import React from "react";
-import { createBrowserRouter } from "react-router";
-import Add from "../pages/Add";
+import { createBrowserRouter } from "react-router-dom";
+
+// Pages (แก้ชื่อไฟล์ใหม่)
+import AddBook from "../pages/AddBook";
 import Home from "../pages/Home";
-import Update from "../pages/Update";
+import UpdateBook from "../pages/UpdateBook";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotAllowed from "../pages/NotAllowed";
@@ -10,6 +12,8 @@ import AdminPage from "../pages/AdminPage";
 import UserPage from "../pages/UserPage";
 import ModOrAdmin from "../pages/ModOrAdmin";
 import Profile from "../pages/Profile";
+
+// ✅ กำหนด router
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +23,7 @@ const router = createBrowserRouter([
     path: "/add",
     element: (
       <AdminPage>
-        <Add />
+        <AddBook />
       </AdminPage>
     ),
   },
@@ -43,7 +47,7 @@ const router = createBrowserRouter([
     path: "/update/:id",
     element: (
       <ModOrAdmin>
-        <Update />
+        <UpdateBook />
       </ModOrAdmin>
     ),
   },
@@ -52,4 +56,5 @@ const router = createBrowserRouter([
     element: <NotAllowed />,
   },
 ]);
+
 export default router;

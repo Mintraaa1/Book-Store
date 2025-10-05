@@ -1,23 +1,15 @@
 import React from "react";
 import { useAuthContext } from "../context/AuthContext";
 import UserProfile from "./UserProfile";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   const { user } = useAuthContext();
-  console.log(user);
 
   const menuItems = [
-    {
-      name: "Search",
-      url: "/",
-    },
-    {
-      name: "Add restaurant",
-      url: "/add",
-    },
-    {
-      name: "About Us",
-      url: "/",
-    },
+    { name: "Search", url: "/" },
+    { name: "Add Item", url: "/items/add" },
+    { name: "About Us", url: "/about" },
   ];
 
   return (
@@ -32,13 +24,12 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              {" "}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
+              />
             </svg>
           </div>
           <ul
@@ -47,44 +38,35 @@ const Navbar = () => {
           >
             {menuItems.map((item) => (
               <li key={item.name}>
-                <a href={item.url}>{item.name}</a>
+                <Link to={item.url}>{item.name}</Link>
               </li>
-            ))}eee
+            ))}
           </ul>
         </div>
-<a href="/" className="flex items-center space-x-2">
-  <img
-    src="/images/book.jpg" // เปลี่ยนเป็น path ของโลโก้รูปที่เราจะใช้
-    alt="Logo"
-    className="h-8 w-auto" // ปรับขนาดโลโก้
-  />
-</a>
+        <Link to="/" className="flex items-center space-x-2">
+          <img
+            src="/images/book.jpg"
+            alt="Logo"
+            className="h-8 w-auto"
+          />
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          {menuItems.map((item) => {
-            return (
-              <li key={item.name}>
-                <a href={item.url}>{item.name}</a>
-              </li>
-            );
-          })}
+          {menuItems.map((item) => (
+            <li key={item.name}>
+              <Link to={item.url}>{item.name}</Link>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="navbar-end space-x-2">
         {user ? (
-          <div>
-            <UserProfile />
-          </div>
+          <UserProfile />
         ) : (
           <div className="space-x-2">
-            {" "}
-            <a href="/register" className="btn btn-soft">
-              Register
-            </a>
-            <a href="/login" className="btn btn-soft">
-              Login
-            </a>
+            <Link to="/register" className="btn btn-soft">Register</Link>
+            <Link to="/login" className="btn btn-soft">Login</Link>
           </div>
         )}
       </div>

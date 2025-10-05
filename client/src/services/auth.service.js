@@ -3,8 +3,9 @@ import TokenService from "./token.service";
 
 const API_URL = import.meta.env.VITE_AUTH_API;
 
+// สมัครสมาชิก
 const register = async (username, name, email, password) => {
-  return await api.post(API_URL + "/signup", {
+  return await api.post(`${API_URL}/register`, {
     username,
     name,
     email,
@@ -12,16 +13,18 @@ const register = async (username, name, email, password) => {
   });
 };
 
+// ล็อกอิน
 const login = async (username, password) => {
-  const response = await api.post(API_URL + "/signin", { username, password });
-  //saving user data to local storage
-  if (!response.data.token) {
-    return response;
+  const response = await api.post(`${API_URL}/login`, { username, password });
+  
+  if (response.data?.token) {
+    TokenService.setUser(response.data);
   }
-  TokenService.setUser(response.data);
+
   return response;
 };
 
+// ออกจากระบบ
 const logout = () => {
   TokenService.removeUser();
 };
@@ -31,4 +34,5 @@ const AuthService = {
   login,
   logout,
 };
+
 export default AuthService;

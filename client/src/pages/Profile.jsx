@@ -5,11 +5,12 @@ const Profile = () => {
   const { user, logout } = useAuthContext();
 
   const userProfile = {
-    name: user.userInfo.name,
-    email: user.userInfo.email,
-    avatar: "https://i.pravatar.cc/400?img=60", // รูป avatar จาก pravatar.cc
-    role: user.authorities.toString(),
-  };
+  name: user?.username || "Guest",
+  email: user?.email || "-",
+  avatar: "https://i.pravatar.cc/400?img=60",
+  role: user?.authorities?.toString() || "USER",
+};
+
   const handleLogOut = () => {
     logout();
   };

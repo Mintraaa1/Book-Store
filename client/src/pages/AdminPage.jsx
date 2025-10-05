@@ -3,12 +3,20 @@ import { useAuthContext } from "../context/AuthContext";
 
 const AdminPage = ({ children }) => {
   const { user } = useAuthContext();
+
   if (!user) {
     return <Navigate to="/login" />;
   }
-  if (user?.authorities.includes("ROLES_ADMIN")) {
+
+  // ตรวจสอบสิทธิ์ admin
+  const isAdmin =
+    user?.authorities?.includes("ROLE_ADMIN") ||
+    user?.roles?.includes("ADMIN");
+
+  if (isAdmin) {
     return children;
   }
+
   return <Navigate to="/notallowed" />;
 };
 
