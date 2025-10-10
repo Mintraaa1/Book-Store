@@ -22,8 +22,9 @@ const AddBook = () => {
     try {
       const response = await BookService.createBook(book);
       if (response.status === 201 || response.status === 200) {
-        Swal.fire("Success", "Book added successfully!", "success");
-        navigate("/");
+        Swal.fire("Success", "Book added successfully!", "success").then(() => {
+          navigate("/"); // ✅ กลับหน้า Home แล้ว Home จะโหลดใหม่อัตโนมัติ
+        });
       }
     } catch (error) {
       Swal.fire("Error", error?.response?.data?.message || error.message, "error");
@@ -31,8 +32,8 @@ const AddBook = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Add New Book</h2>
+    <div className="max-w-lg mx-auto mt-10">
+      <h2 className="text-2xl font-bold mb-4 text-center">➕ Add New Book</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input type="text" name="title" placeholder="Title" className="input input-bordered w-full" onChange={handleChange} required />
         <input type="text" name="author" placeholder="Author" className="input input-bordered w-full" onChange={handleChange} required />

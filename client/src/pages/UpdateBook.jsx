@@ -20,7 +20,7 @@ const UpdateBook = () => {
       try {
         const response = await BookService.getBookById(id);
         if (response.status === 200) {
-          setBook(response.data);
+          setBook(response.data.data || response.data);
         }
       } catch (error) {
         Swal.fire("Error", error?.response?.data?.message || error.message, "error");
@@ -39,7 +39,7 @@ const UpdateBook = () => {
       const response = await BookService.updateBookById(id, book);
       if (response.status === 200) {
         Swal.fire("Success", "Book updated successfully!", "success").then(() => {
-          navigate("/");
+          navigate("/"); // ✅ กลับหน้า Home แล้ว Home จะโหลดใหม่เอง
         });
       }
     } catch (error) {

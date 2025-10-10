@@ -1,60 +1,31 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-// Pages (แก้ชื่อไฟล์ใหม่)
-import AddBook from "../pages/AddBook";
 import Home from "../pages/Home";
+import AddBook from "../pages/AddBook";
 import UpdateBook from "../pages/UpdateBook";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import NotAllowed from "../pages/NotAllowed";
-import AdminPage from "../pages/AdminPage";
-import UserPage from "../pages/UserPage";
-import ModOrAdmin from "../pages/ModOrAdmin";
-import Profile from "../pages/Profile";
+import AddJournal from "../pages/AddJournal";
+import UpdateJournal from "../pages/UpdateJournal";
+import AddComic from "../pages/AddComic";
+import UpdateComic from "../pages/UpdateComic";
 
-// ✅ กำหนด router
+
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/add",
-    element: (
-      <AdminPage>
-        <AddBook />
-      </AdminPage>
-    ),
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/profile",
-    element: (
-      <UserPage>
-        <Profile />
-      </UserPage>
-    ),
-  },
-  {
-    path: "/update/:id",
-    element: (
-      <ModOrAdmin>
-        <UpdateBook />
-      </ModOrAdmin>
-    ),
-  },
-  {
-    path: "/notallowed",
-    element: <NotAllowed />,
-  },
+  { path: "/", element: <Home /> },
+
+  // BOOK
+  { path: "/add/book", element: <AddBook /> },
+  { path: "/update/book/:id", element: <UpdateBook /> },
+
+  // JOURNAL
+  { path: "/add/journal", element: <AddJournal /> },
+  { path: "/update/journal/:id", element: <UpdateJournal /> },
+
+  // COMIC
+  { path: "/add/comic", element: <AddComic /> },
+  { path: "/update/comic/:id", element: <UpdateComic /> },
+
+ 
 ]);
 
 export default router;
